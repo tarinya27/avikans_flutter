@@ -232,7 +232,7 @@ class TransactionCards extends StatelessWidget {
           onTap: () {
            Navigator.push(
               context,
-             MaterialPageRoute(builder: (context) => Settings()), // Navigate to settings.dart
+             MaterialPageRoute(builder: (context) => SettingsPage()), // Navigate to settings.dart
             );
           },
         ),
