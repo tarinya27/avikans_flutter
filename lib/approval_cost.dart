@@ -1,4 +1,3 @@
-
 import 'package:avikances/fixed_cost.dart';
 import 'package:avikances/labor_cost.dart';
 import 'package:avikances/materialcost.dart';
@@ -55,15 +54,30 @@ class CostApproval extends StatelessWidget {
               ),
             ),
           ),
-          // Top left half circle
+          // Top left half circle with back arrow
           Positioned(
             top: -35,
             left: -50,
             child: ClipOval(
-              child: Container(
-                width: 150,
-                height: 150,
-                color: Color(0xFF834d9b),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    height: 150,
+                    color: Color(0xFF834d9b),
+                  ),
+                  Positioned(
+                    top: 50,
+                    left: 50,
+                    child: IconButton(
+                      icon: Icon(Icons.arrow_back, color: const Color.fromARGB(255, 12, 12, 12), size: 30),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -117,7 +131,7 @@ class CostApproval extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "Material cost",
+                            "Material Cost",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -143,7 +157,7 @@ class CostApproval extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "Labor cost",
+                            "Labour Cost",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
@@ -169,7 +183,7 @@ class CostApproval extends StatelessWidget {
                         ),
                         child: Center(
                           child: Text(
-                            "Fixed cost",
+                            "Fixed Cost",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
