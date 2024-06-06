@@ -17,19 +17,17 @@ class FinshJobs extends StatelessWidget {
               color: Color(0xFFC779D0),
             ),
             // Scrolling content
-            child: Scrollbar(
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: kToolbarHeight),
-                itemCount: jobs.length,
-                itemBuilder: (context, index) {
-                  final job = jobs[index];
-                  return Column(
-                    children: [
-                      buildLaborListTitle(job),
-                    ],
-                  );
-                },
-              ),
+            child: ListView.builder(
+              padding: EdgeInsets.only(top: kToolbarHeight),
+              itemCount: jobs.length,
+              itemBuilder: (context, index) {
+                final job = jobs[index];
+                return Column(
+                  children: [
+                    buildLaborListTitle(job),
+                  ],
+                );
+              },
             ),
           ),
           // Transparent AppBar with background blending
@@ -46,7 +44,13 @@ class FinshJobs extends StatelessWidget {
                     color: Colors.white.withOpacity(0.3),
                   ),
                   child: AppBar(
-                    title: Text("Finish Jobs"),
+                    leading: IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                    title: Text("FINISH JOBS"),
                     backgroundColor: Colors.transparent,
                     elevation: 0,
                     centerTitle: true,
@@ -64,22 +68,31 @@ class FinshJobs extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(235, 11, 10, 10),
-            blurRadius: 6,
-            offset: Offset(0, 2),
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: Offset(0, 3),
           ),
         ],
       ),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(16),
-        title: Text(job.jobs),
-        subtitle: Text("Status: ${job.status}"),
-        trailing: Text("Date: ${job.Date}"), // Assuming the correct property is `date`
-        textColor: Colors.black,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            color: Colors.white.withOpacity(0.2),
+            child: ListTile(
+              title: Text(job.jobs),
+              subtitle: Text("Status: ${job.status}"),
+              trailing: Text("Date: ${job.Date}"), // Assuming the correct property is `date`
+              textColor: Colors.black,
+            ),
+          ),
+        ),
       ),
     );
   }
