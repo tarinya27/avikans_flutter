@@ -6,7 +6,7 @@
 
 // import 'dart:html';
 
-
+import 'package:avikances/settings.dart';
 import 'package:avikances/approval_cost.dart';
 import 'package:avikances/finesh_jobs.dart';
 import 'package:avikances/notificationView.dart';
@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:avikances/start_jobs.dart';
 
 class Dashbord extends StatelessWidget {
   @override
@@ -49,14 +50,14 @@ class DashbordHome extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 30),
                   title: Text(
-                    "Hi shamith",
+                    "Hi Shamith",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall
                         ?.copyWith(color: const Color.fromARGB(255, 16, 16, 16)),
                   ),
                   subtitle: Text(
-                    "Welcome to Admin",
+                    "Welcome to the admin dashboard",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
@@ -120,7 +121,7 @@ class DashbordHome extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CostApproval()));
+                              builder: (context) => StartJobs()));
                     },
                     child: itemDashboard(
                       'Day Close',
@@ -136,7 +137,7 @@ class DashbordHome extends StatelessWidget {
                               builder: (context) => FinshJobs()));
                     },
                     child: itemDashboard(
-                      'finish Jobs',
+                      'Finish Jobs',
                       CupertinoIcons.doc_append,
                       Colors.amber,
                     ),
@@ -144,7 +145,7 @@ class DashbordHome extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) =>FinshJobs())); //seting
+                          MaterialPageRoute(builder: (context) =>SettingsPage())); //setting
                     },
                     child: itemDashboard(
                       'Settings',
