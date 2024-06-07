@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:avikances/view_jobs.dart';
 import 'package:avikances/working_jobs.dart';
-import 'package:avikances/settings.dart'; 
-import 'package:avikances/notificationView.dart'; 
-import 'package:avikances/notifications.dart';
+import 'package:avikances/settings.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,9 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Supervision Dashboard',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
       home: SupervisiorDashboard(),
     );
   }
@@ -31,22 +26,44 @@ class SupervisiorDashboard extends StatelessWidget {
     final int inprogressJobs = 4;
 
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.settings, color: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsPage()),
+              );
+            },
+          ),
+        ],
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/wall1.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.purple, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
+            color: Colors.white.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(16.0),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 20.0,
+                spreadRadius: 5.0,
+                offset: Offset(0, 10),
+              ),
+            ],
           ),
           child: Column(
-            children: <Widget>[
+            children: [
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -56,7 +73,7 @@ class SupervisiorDashboard extends StatelessWidget {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage('images/girl.jpg'), // change avater here
+                          backgroundImage: AssetImage('images/girl.jpg'),
                           radius: 30,
                         ),
                         SizedBox(width: 10),
@@ -74,18 +91,13 @@ class SupervisiorDashboard extends StatelessWidget {
                             Text(
                               'Welcome to the Supervision Dashboard',
                               style: TextStyle(
-                                color: Colors.white70,
+                                color: Colors.white,
                                 fontSize: 16,
                               ),
                             ),
                           ],
                         ),
                       ],
-                    ),
-                    Icon(
-                      Icons.search,
-                      color: Colors.white,
-                      size: 30,
                     ),
                   ],
                 ),
@@ -135,8 +147,6 @@ class SupervisiorDashboard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              TransactionCards(), // Add TransactionCards widget
             ],
           ),
         ),
@@ -171,7 +181,7 @@ class SupervisiorDashboard extends StatelessWidget {
 class CustomCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final Function onTap; // Add onTap parameter
+  final Function onTap;
 
   CustomCard({required this.title, required this.subtitle, required this.onTap});
 
@@ -180,11 +190,11 @@ class CustomCard extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(),
       child: Container(
-        height: 150, // change height for both cards
+        height: 150,
         margin: EdgeInsets.all(16.0),
         padding: EdgeInsets.all(16.0),
         decoration: BoxDecoration(
-          color: Colors.white, //change background color
+          color: Colors.white,
           borderRadius: BorderRadius.circular(16.0),
           boxShadow: [
             BoxShadow(
@@ -201,7 +211,7 @@ class CustomCard extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: Colors.purple,
+                color: Color(0xFFC779D0),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -209,74 +219,9 @@ class CustomCard extends StatelessWidget {
             Text(
               subtitle,
               style: TextStyle(
-                color: Colors.purple,
+                color: Color(0xFFC779D0),
                 fontSize: 22.0,
                 fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class TransactionCards extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TransactionCard(
-          image: AssetImage('images/settings.png'),
-          title: "Settings",
-          onTap: () {
-           Navigator.push(
-              context,
-             MaterialPageRoute(builder: (context) => SettingsPage()), // Navigate to settings.dart
-            );
-          },
-        ),
-        TransactionCard(
-          image: AssetImage('images/bell.png'),
-          title: "Notifications",
-          onTap: () {
-           Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context)=> Notifications()),
-           );
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class TransactionCard extends StatelessWidget {
-  final ImageProvider image; 
-  final String title;
-  final Function onTap;
-
-  TransactionCard({
-    required this.image,
-    required this.title,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Row(
-          children: [
-            Image(image: image, width: 32, height: 32), 
-            SizedBox(width: 16),
-            Text(
-              title,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
               ),
             ),
           ],

@@ -20,7 +20,7 @@ class ListViews extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Top left half circle
+          // Top left half circle with back arrow
           Positioned(
             top: -35,
             left: -50,
@@ -30,6 +30,12 @@ class ListViews extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Color(0xFFB993D6),
                 shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.black),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
               ),
             ),
           ),
