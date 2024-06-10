@@ -1,9 +1,10 @@
-
 import 'dart:io';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:camera/camera.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,139 +25,232 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class Notes extends StatefulWidget {
+class Notes extends StatelessWidget {
   const Notes({Key? key, required this.title}) : super(key: key);
-
   final String title;
 
   @override
-  State<Notes> createState() => _NotesState();
-}
-
-class _NotesState extends State<Notes> {
-  File? _image;
-  final picker = ImagePicker();
-  TextEditingController _descriptionController = TextEditingController();
-
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _descriptionController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final TextEditingController _descriptionController = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'JOB PROCESSOR',
           textAlign: TextAlign.center,
         ),
-        centerTitle: true, // Center the title
-        backgroundColor: const Color(0xFFB993D6), // Set app bar background color
-      ),
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text(
-                      'Hi! Take a currently working jobs',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                    const SizedBox(height: 40),
-                    GestureDetector(
-                      onTap: getImage,
-                      child: Container(
-                        height: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: _image == null
-                            ? const Center(
-                                child: Icon(Icons.camera_alt),
-                              )
-                            : Image.file(_image!),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Take a photo',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 10),
-                    // Textbox for writing description
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
-                      child: TextField(
-                        controller: _descriptionController,
-                        decoration: const InputDecoration(
-                          hintText: 'Note:- Write a description and enter the job items',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                        ),
-                        maxLines: 3,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    ElevatedButton(
-                      onPressed: () {
-                        
-                      },
-                      child: const Text('Submit'),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  bottom: -30,
-                  right: -30,
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFB993D6), // Use the same color as app bar
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: -30,
-                  left: -30, // Adjust position for the left half circle
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFB993D6), // Use the same color as app bar
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        centerTitle: true,
+        backgroundColor: const Color(0xFFB993D6),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
       ),
+      body: Stack(
+        children: [
+          Center(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    'Hi! Take a currently working job',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Take a photo',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CameraScreen()),
+                      );
+                    },
+                    child: const Text('Open Camera'),
+                  ),
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: _descriptionController,
+                    decoration: const InputDecoration(
+                      hintText: 'Note: Write a description and enter the job items',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                    ),
+                    maxLines: 3,
+                  ),
+                  const SizedBox(height: 40),
+                ],
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -30,
+            left: -30,
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: const Color(0xFFB993D6),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -30,
+            right: -30,
+            child: Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: const Color(0xFFB993D6),
+                shape: BoxShape.circle,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
+  }
+}
+
+class CameraScreen extends StatefulWidget {
+  @override
+  _CameraScreenState createState() => _CameraScreenState();
+}
+
+class _CameraScreenState extends State<CameraScreen> {
+  CameraController? _controller;
+  List<CameraDescription>? _cameras;
+  bool _isCameraInitialized = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    _cameras = await availableCameras();
+    _controller = CameraController(_cameras![0], ResolutionPreset.high);
+
+    await _controller!.initialize();
+    setState(() {
+      _isCameraInitialized = true;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  Future<void> _takePicture() async {
+    if (!_controller!.value.isInitialized) {
+      return;
+    }
+
+    if (_controller!.value.isTakingPicture) {
+      return;
+    }
+
+    try {
+      final Directory extDir = await getApplicationDocumentsDirectory();
+      final String dirPath = '${extDir.path}/Pictures/flutter_test';
+      await Directory(dirPath).create(recursive: true);
+      final String filePath = '$dirPath/${DateTime.now().millisecondsSinceEpoch}.jpg';
+
+      await _controller!.takePicture().then((XFile file) {
+        file.saveTo(filePath);
+        _saveToDatabase(filePath);
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<void> _saveToDatabase(String filePath) async {
+    await DatabaseHelper.instance.insertImage(filePath);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isCameraInitialized) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Camera'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: CameraPreview(_controller!),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              onPressed: _takePicture,
+              child: const Icon(Icons.camera),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DatabaseHelper {
+  static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
+  static Database? _database;
+
+  DatabaseHelper._privateConstructor();
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+    _database = await _initDatabase();
+    return _database!;
+  }
+
+  Future<Database> _initDatabase() async {
+    String path = join(await getDatabasesPath(), 'image_database.db');
+    return await openDatabase(
+      path,
+      version: 1,
+      onCreate: _onCreate,
+    );
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    await db.execute('''
+      CREATE TABLE images(
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        path TEXT
+      )
+    ''');
+  }
+
+  Future<void> insertImage(String path) async {
+    Database db = await instance.database;
+    await db.insert('images', {'path': path});
+  }
+
+  Future<List<Map<String, dynamic>>> getImages() async {
+    Database db = await instance.database;
+    return await db.query('images');
   }
 }

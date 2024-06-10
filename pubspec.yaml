@@ -46,9 +46,12 @@ dependencies:
   quickalert: ^1.1.0
   image_picker: ^0.8.6
   path_provider: ^2.0.5
+  dropdown_button2: ^2.3.8
+  sqflite: ^2.0.3
+  path: ^1.8.2
+  camera: ^0.10.0+1
 
- 
- 
+  intl: ^0.17.0 # or the latest version available
 
 
 
