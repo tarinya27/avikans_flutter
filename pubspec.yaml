@@ -42,7 +42,7 @@ dependencies:
   flutter_slidable: ^3.1.0
   mysql1: ^0.20.0
   mysql_client: ^0.0.27
-  http: ^1.2.0
+  http: ^1.2.1
   quickalert: ^1.1.0
   image_picker: ^0.8.6
   path_provider: ^2.0.5
@@ -52,6 +52,9 @@ dependencies:
   camera: ^0.10.0+1
   bulleted_list: 0.0.1+0.1a
   google_fonts: ^6.2.1
+  provider: ^6.0.0  
+  url_launcher: ^6.3.0
+  
 
 
 
@@ -86,6 +89,8 @@ flutter:
   assets:
     - images/welcome1.mp4
     - images/about.png
+    - images/editprofile.jpg
+    - images/contact.jpg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

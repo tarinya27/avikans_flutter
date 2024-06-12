@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+//import 'package:url_launcher/url_launcher.dart';
+
+import 'package:avikances/updateprofile.dart';
+import 'package:avikances/notificationView.dart'; 
+import 'package:avikances/about.dart';
+import 'package:avikances/welcome.dart';
+import 'package:avikances/problem.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
             // Handle back button press
           },
         ),
-        title: Text('Settings'),
+        title: Text('SETTINGS'),
         centerTitle: true,
         backgroundColor: Color(0xFF834d9b),
       ),
@@ -44,7 +51,10 @@ class _SettingsPageState extends State<SettingsPage> {
             title: Text('Account'),
             trailing: ElevatedButton(
               onPressed: () {
-                // Handle update button press
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => UpdateProfile()),
+                );
               },
               child: Text('Update'),
             ),
@@ -54,23 +64,33 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.report_gmailerrorred),
             title: Text('About Us'),
             onTap: () {
-              // Handle about us tap
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUsPage()),
+              );
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.lock),
-            title: Text('Privacy & Security'),
+            title: Text('Notifications'),
             onTap: () {
-              // Handle privacy & security tap
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Notifications()),
+              );
             },
           ),
           Divider(),
           ListTile(
             leading: Icon(Icons.help),
-            title: Text('Help & Feedback'),
+            title: Text('Report a Problem'),
             onTap: () {
-              // Handle help & feedback tap
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Problem()),
+              );
+              
             },
           ),
           Divider(),
@@ -103,7 +123,10 @@ class _SettingsPageState extends State<SettingsPage> {
             leading: Icon(Icons.logout),
             title: Text('Log out'),
             onTap: () {
-              // Handle logout tap
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VideoExample()),
+              );
             },
           ),
         ],
