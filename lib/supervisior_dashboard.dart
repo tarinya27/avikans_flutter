@@ -12,12 +12,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Supervision Dashboard',
-      home: SupervisiorDashboard(),
+       home: SupervisiorDashboard(username: '$key',),
     );
   }
 }
 
 class SupervisiorDashboard extends StatelessWidget {
+  final String username;
+   const SupervisiorDashboard({Key? key, required this.username}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     // Static job counts
@@ -81,7 +83,7 @@ class SupervisiorDashboard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hi, Tarinya!',
+                              'Hi, $username!',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 22,

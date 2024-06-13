@@ -26,8 +26,9 @@ final rejectController = TextEditingController();
   }
 
   Future<List<Labor>> fetchLabour() async {
+    final String url ="http://192.168.1.30:8080/api/v1";
     final response =
-        await http.get(Uri.parse('http://10.0.2.2/api/v1/labour/labourSearch'));
+        await http.get(Uri.parse('$url/labour/labourSearch'));
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
       List<Labor> materials =
