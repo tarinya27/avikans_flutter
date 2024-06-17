@@ -21,7 +21,7 @@ class Notifications extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashbord()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Dashbord(username: "",)));
           },
         ),
         title: const Text("Notifications"),

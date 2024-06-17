@@ -18,18 +18,24 @@ import 'package:get/get.dart';
 import 'package:avikances/start_jobs.dart';
 
 class Dashbord extends StatelessWidget {
+ final String username;
+
+  const Dashbord({Key? key, required this.username}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Dashboard",
     theme: ThemeData(primarySwatch: Colors.deepPurple), // Set primarySwatch to deepPurple,
-      home: DashbordHome(),
+      home: DashbordHome(username :username),
     );
   }
 }
 
 class DashbordHome extends StatelessWidget {
+   final String username;
+
+  const DashbordHome({Key? key, required this.username}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +56,7 @@ class DashbordHome extends StatelessWidget {
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(horizontal: 30),
                   title: Text(
-                    "Hi Shamith",
+                    "Hi $username",
                     style: Theme.of(context)
                         .textTheme
                         .headlineSmall

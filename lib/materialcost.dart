@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:quickalert/quickalert.dart';
 
 class MaterialCost extends StatefulWidget {
+   
   @override
   _MaterialCostState createState() => _MaterialCostState();
 }
@@ -22,8 +23,10 @@ class _MaterialCostState extends State<MaterialCost> {
   }
 
   Future<List<Materials>> fetchMaterials() async {
+    final String url ="http://192.168.1.30:8080/api/v1";
     final response = await http
-        .get(Uri.parse('http://10.0.2.2/api/v1/material/searchMaterial'));
+    
+        .get(Uri.parse('$url/material/searchMaterial'));
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
       List<Materials> materials =

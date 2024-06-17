@@ -21,8 +21,9 @@ class _FixedCostState extends State<FixedCost>{
   }
 
   Future<List<Fix>> fetchFixed() async {
+    final String url ="http://192.168.1.30:8080/api/v1";
     final response = await http
-        .get(Uri.parse('http://10.0.2.2/api/v1/fixed/fixed'));
+        .get(Uri.parse('$url/fixed/fixed'));
     if (response.statusCode == 200) {
       List<dynamic> body = json.decode(response.body);
       List<Fix> materials =

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:avikances/supervisior_dashboard.dart';
 import 'package:avikances/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -240,29 +241,37 @@ class _HomePageState extends State<HomePage> {
   Future<void> login() async {
     final String username = emailController.text;
     final String password = passwordController.text;
+     final String url ="http://192.168.1.30:8080/api/v1";
 
     final response = await http.get(
-      Uri.parse('http://10.0.2.2/api/v1/login/getUsernamePassword/$username/$password'),
+      Uri.parse('$url/login/getUsernamePassword/$username/$password'),
     );
 
     if (response.statusCode == 200) {
       final Map<String, dynamic>? responseData = json.decode(response.body);
 
       if (responseData != null && responseData.containsKey('admin_type_id')) {
-        final int adminType = responseData['admin_type_id'] as int;
 
+         final int adminType = responseData['admin_type_id'] as int;
+        final String username = responseData['username'] as String;
+     
         if (adminType == 1) {
           print(adminType);
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Dashbord()),
+             
+            MaterialPageRoute(builder: (context) => Dashbord(username: username)),
           );
         } else if (adminType == 2) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('department login'),
-            ),
+          Navigator.push(
+            context, 
+            MaterialPageRoute(builder: (context)=>SupervisiorDashboard(username:username)),
           );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(
+              
+          //   ),
+          
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -270,12 +279,7 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Invalid response from the server.'),
-          ),
-        );
+      
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
