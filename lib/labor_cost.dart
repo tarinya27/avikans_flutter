@@ -26,7 +26,7 @@ final rejectController = TextEditingController();
   }
 
   Future<List<Labor>> fetchLabour() async {
-    final String url ="http://192.168.1.30:8080/api/v1";
+    final String url ="http://192.168.208.123:8080/api/v1";
     final response =
         await http.get(Uri.parse('$url/labour/labourSearch'));
     if (response.statusCode == 200) {

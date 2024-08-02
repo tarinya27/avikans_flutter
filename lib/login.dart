@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:avikances/supervisior_dashboard.dart';
+import 'package:avikances/dash.dart';
 import 'package:avikances/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -241,7 +241,7 @@ class _HomePageState extends State<HomePage> {
   Future<void> login() async {
     final String username = emailController.text;
     final String password = passwordController.text;
-     final String url ="http://192.168.1.30:8080/api/v1";
+     final String url ="http://192.168.208.123:8080/api/v1";
 
     final response = await http.get(
       Uri.parse('$url/login/getUsernamePassword/$username/$password'),
@@ -265,7 +265,7 @@ class _HomePageState extends State<HomePage> {
         } else if (adminType == 2) {
           Navigator.push(
             context, 
-            MaterialPageRoute(builder: (context)=>SupervisiorDashboard(username:username)),
+            MaterialPageRoute(builder: (context)=>Dash(username:username)),
           );
           // ScaffoldMessenger.of(context).showSnackBar(
           //   SnackBar(

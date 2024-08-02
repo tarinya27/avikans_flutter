@@ -12,12 +12,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Dash(),
+      home: Dash(username: '$key',),
     );
   }
 }
 
 class Dash extends StatelessWidget {
+  final String username;
+   const Dash({Key? key, required this.username}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,7 +66,7 @@ class Dash extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'HI TARINYA!',
+                  'HI $username ',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,

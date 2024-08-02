@@ -91,6 +91,8 @@ flutter:
     - images/about.png
     - images/editprofile.jpg
     - images/contact.jpg
+    - images/cover1.jpeg
+    - images/approval.jpg
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

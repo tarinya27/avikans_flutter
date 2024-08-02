@@ -7,7 +7,6 @@ import 'package:avikances/login.dart';
 import 'package:avikances/note.dart';
 import 'package:avikances/start_jobs.dart';
 import 'package:flutter/material.dart';
-import 'package:avikances/supervisior_dashboard.dart';
 import 'package:avikances/fixed_cost.dart';
 
 

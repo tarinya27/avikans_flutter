@@ -23,7 +23,7 @@ class _MaterialCostState extends State<MaterialCost> {
   }
 
   Future<List<Materials>> fetchMaterials() async {
-    final String url ="http://192.168.1.30:8080/api/v1";
+    final String url ="http://192.168.208.123:8080/api/v1";
     final response = await http
     
         .get(Uri.parse('$url/material/searchMaterial'));
